@@ -1,17 +1,25 @@
 .admin-container{
     display: flex;
     .admin-sidebar{
-
+        position: fixed;
+        width: 270px;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1000; 
     }
     .admin-content{
-        width: 100%;
+        margin-left: 270px; // Bỏ lề trái để nội dung chính không bị che khuất bởi sidebar
+        flex: 1; // Đảm bảo phần nội dung chính chiếm phần còn lại của không gian
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 270px); // Tính toán chiều rộng của phần nội dung chính
         .admin-header{
             height: 40px;
             border: 1px solid greenyellow;
         }
         .admin-main{
             height: auto;
-            border: 1px solid red;
         }
     }
 }

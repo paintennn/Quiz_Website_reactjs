@@ -2,7 +2,8 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { BsFillPlusCircleFill } from "react-icons/bs";
-import axios from 'axios';
+import { toast } from 'react-toastify';
+import { postCreateNewUser } from '../../../services/ApiServices';
 
 const ModalCreateUser = (props) => {
   const {show, setShow} = props;
@@ -35,6 +36,14 @@ const ModalCreateUser = (props) => {
     //Trong trường hợp ko upload ảnh thì hiện chữ PreviewImage
   }
 
+    //Validate Email
+    const validateEmail = (email) => {
+      return String(email)
+        .toLowerCase()
+        .match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+    };
   //hàm để thêm dữ liệu vào backend
   const handleSubmitCreateUser = async() => {
     //gồm 2 việc
@@ -47,17 +56,28 @@ const ModalCreateUser = (props) => {
      // role: role,
      // userimage: image
     // };
-
-    //Lấy data từ các state
-    const data = new FormData();
-    data.append('email', email);
-    data.append('password', password);
-    data.append('username', userName);
-    data.append('role', role);
-    data.append('userimage', image);
-    let respone = await axios.post('http://localhost:8081/api/v1/participant', data); // Đẩy dữ liệu lên bằng axios
-    console.log(respone);
-    alert("thanh cong")
+    //Validate
+    const isValidEmail = validateEmail(email);
+    if(!isValidEmail) {
+      toast.error("Invalid email address");
+      return;
+    }
+    if(!password){
+      toast.error("Password is required");
+      return;
+    }
+    
+    let data = await postCreateNewUser(email, password, userName, role, image)//gọi hàm thêm user từ services
+    console.log(data);
+    //Kiểm tra kết quả trả về
+    if(data && data.EC === 0){
+      toast.success(data.EM);//Thành công
+      handleClose();
+      await props.fetchListUsers;
+    }
+    else{
+      toast.error(data.EM);//Thất bại
+    }
   }
 
   return (
