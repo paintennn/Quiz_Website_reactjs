@@ -1,3 +1,4 @@
+import { store } from "../redux/store";
 //mục đích: để giảm lược hóa bước xử lý data ở client
 
 import axios from "axios";
@@ -8,6 +9,10 @@ const instance = axios.create({
 
 // Add a request interceptor
 instance.interceptors.request.use(function (config) {
+  //Mỗi 1 lần gọi request thì sẽ thêm cái token vào
+  const access_token = store?.getState()?.user?.account?.access_token;
+  config.headers["Authorization"] = "Bearer " + access_token;
+
     // Do something before request is sent
     return config;
   }, function (error) {
