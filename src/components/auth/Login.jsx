@@ -54,6 +54,12 @@ const Login = () => {
             toast.error("An error occurred");
         }
     }
+
+    const handleKeyDown = (event) => {
+        if (event && event.key === 'Enter') {
+            handleLogin();
+        }
+    }
     return(
         <div className="container mt-5">
             <div className='back'>
@@ -84,6 +90,7 @@ const Login = () => {
                                     <label for="password">Password</label>
                                     <input 
                                         onChange={(event) => setPassword(event.target.value)}
+                                        onKeyDown={(event) => handleKeyDown(event)}
                                         value={password} 
                                         type="password" 
                                         className="form-control" 

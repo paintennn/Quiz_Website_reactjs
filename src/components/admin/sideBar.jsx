@@ -29,12 +29,13 @@ const Sidebar = () => {
             <NavLink exact to="/admins/manage-user" activeclassname="activeClicked">
               <CDBSidebarMenuItem icon="user">Quản lý User</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/admins/manageQuizz" activeclassname="activeClicked">
+            <NavLink exact to="/admins/manage-quizzes" activeclassname="activeClicked">
               <CDBSidebarMenuItem icon="list">Quản lý Bài Quizz</CDBSidebarMenuItem>
             </NavLink>
-            <NavLink exact to="/admins/manageQuestion" target="_blank" activeclassname="activeClicked">
+            <NavLink exact to="/admins/manage-questions" activeclassname="activeClicked">
               <CDBSidebarMenuItem icon="question">Quản lý Câu Hỏi</CDBSidebarMenuItem>
             </NavLink>
+            
           </CDBSidebarMenu>
           
         </CDBSidebarContent>

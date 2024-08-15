@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import {getDataQuiz} from "../../services/ApiServices"
+import {getDataQuiz, postSubmitQuiz} from "../../services/ApiServices"
 import _ from 'lodash';
 import './DetailQuiz.scss'
 import Questions from "./Questions";
+import ModalResult from "./ModalResult";
+import RightContent from "./RightContent/RightContent";
 
 const DetailQuiz = (props) => {
     const param = useParams(); //Dùng param để lấy id của từng bài học 
@@ -12,6 +14,8 @@ const DetailQuiz = (props) => {
     console.log(location)
     const [dataQuiz, setDataQuiz] = useState([]);//Dùng để setdata khi raw thành công
     const [index, setIndex] = useState(0);
+    const [isShowModalResult, setShowModalResult] = useState(false)
+    const [dataModalResult, setDataModalResult] = useState({})
 
     useEffect(() => {
         fetchQuestions();
@@ -38,12 +42,12 @@ const DetailQuiz = (props) => {
                         item.answers.isSelected = false;
                         answers.push(item.answers)
                     });
+                    answers = _.orderBy(answers,['id'],['asc']);
                     return {questionId: key, answers, questionDescription, image}
                 })
                 .value()
                 
             setDataQuiz(data); //Set data user
-            console.log(data)
         }
     }
 
@@ -58,15 +62,50 @@ const DetailQuiz = (props) => {
             setIndex(index + 1)
         }      
     }
-    const handelFinish = () => {
-        
+    const handelFinish = async() => {
+        //Lấy câu trả lời của người dùng gửi lên backend
+        let payload = {
+            quizId: +quizId,
+            answers: []
+        };
+        let a = [];
+        if(dataQuiz && dataQuiz.length > 0){
+            dataQuiz.forEach(question => {
+                let questionId = question.questionId;
+                let userAnswerId = [];
+                //todo: userAnswerId
+                question.answers.forEach(a => {
+                    if(a.isSelected === true){
+                        userAnswerId.push(a.id); //Thêm id của câu trả lời được chọn vào mảng userAnswerId
+                    }
+                })
+                a.push({
+                    questionId: +questionId,
+                    userAnswerId: userAnswerId
+                })
+            })
+        }
+
+        payload.answers = a;
+        //submit api
+        let res = await postSubmitQuiz(payload)
+        console.log("res",res)
+        if(res && res.EC === 0){
+            setDataModalResult({
+                countCorrect: res.DT.countCorrect,
+                countTotal: res.DT.countTotal,
+                quizData: res.DT.quizData
+            })
+            setShowModalResult(true)
+        }else{
+            alert("Something went wrong")
+        }
     }
 
     const handleCheckBox =(answerId , questionId) => {
         let dataQuizClone = _.cloneDeep(dataQuiz); //cloneDeep để clone tất cả object 
         let q = dataQuizClone.find(item => item.questionId === questionId)
         if(q && q.answers){
-            console.log('q: ', q)
             let b = q.answers.map(a => {
                 if(a.id === answerId){
                     a.isSelected = !a.isSelected;//Kiểm tra nếu id answer lựa chọn bằng với id a của câu hỏi thì set bằng true
@@ -107,9 +146,9 @@ const DetailQuiz = (props) => {
                 </div>
             </div>
             <div className="right-content">
-                Count down
+                <RightContent setIndex={setIndex} handelFinish={handelFinish} dataQuiz={dataQuiz}/>
             </div>
-
+            <ModalResult show={isShowModalResult} setShow={setShowModalResult} dataModalResult = {dataModalResult}/>
         </div>
     )
 }

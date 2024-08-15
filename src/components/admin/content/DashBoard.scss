@@ -1,0 +1,35 @@
+.dashboard-container{
+    padding: 16px;
+    .Content{
+        margin-top: 20px;
+        display: flex;
+        .Content-left{
+            width: 60%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            .Content-left-child{
+                border: 1px solid #000;
+                border-radius: 10px;
+                width: calc(50% - 20px);
+                height: 250px;
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                .text-2{
+                    font-size: 32px;
+                    font-weight: 600;
+                    color: red;
+                }
+            }
+        }
+        .Content-right{
+            width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}

@@ -11,18 +11,31 @@ import App from './views/App';
 import Register from "./components/auth/Register";
 import ListQuiz from "./components/quiz/ListQuiz";
 import DetailQuiz from "./components/quiz/DetailQuiz";
+import ManageQuiz from "./components/admin/content/Quiz/ManageQuiz";
+import Questions from "./components/admin/content/Questions/Questions";
+import PrivateRoute from "./routes/PrivateRoute";
 const Layout = (props) => {
     return(
         <>
         <Routes>
             <Route exact path='/' element={<App/>}>
                 <Route exact index element={<Home/>}/>
-                <Route exact  path='/quiz' element={<ListQuiz/>}/>       
+                <Route exact  path='/quiz' element={
+                    <PrivateRoute>
+                        <ListQuiz/>
+                    </PrivateRoute>
+                }/>       
             </Route>
             <Route exact  path='/quiz/:id' element={<DetailQuiz/>}/>  
-            <Route exact  path='/admins' element={<Admin/>}>
+            <Route exact  path='/admins' element={
+                <PrivateRoute>
+                    <Admin/>
+                </PrivateRoute>
+            }>
                 <Route exact  index element={<DashBoard/>}/>
                 <Route exact  path='manage-user' element={<ManageUser/>}/>
+                <Route exact  path='manage-quizzes' element={<ManageQuiz/>}/>
+                <Route exact  path='manage-questions' element={<Questions/>}/>
             </Route>
 
             <Route exact  path='/login' element={<Login/>}/>

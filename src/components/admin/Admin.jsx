@@ -9,9 +9,6 @@ const Admin = (props) => {
                 <SideBar/>
             </div>
             <div className="admin-content">
-                <div className="admin-header">
-                    Header
-                </div>
                 <div className="admin-main">
                     <Outlet/>
                 </div>

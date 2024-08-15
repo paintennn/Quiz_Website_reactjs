@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import './DetailQuiz.scss'
-import { useState } from 'react';
+
 const Questions = (props) => {
     const {data, index} = props;
     if(_.isEmpty(data)){
