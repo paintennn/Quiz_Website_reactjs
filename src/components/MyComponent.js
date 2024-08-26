@@ -2,7 +2,7 @@
 // function component
 import React from "react";
 import { applyMiddleware } from "redux";
-import UserInfor from "./UserInfor";
+import AddUserInfor from "./AddUserInfor";
 import DisplayInfor from "./DisplayInfor";
 
 
@@ -16,15 +16,31 @@ class MyComponent extends React.Component {
             { id: 3, name: 'Thuan', age: '69' }
         ]
     }
+
+    handleAddNewUser = (userObj) => {
+        // let listUsersNew = [...this.state.listUsers]
+        // listUsersNew.unshift(userObj)
+        // this.setState({
+        //     listUsers: listUsersNew
+        // })
+        this.setState({
+            listUsers: [userObj, ...this.state.listUsers]
+        })
+    }
     //JSX
     render() {
         //dry: don't repeat yourseft
         return (
             <div>
-                <UserInfor />
+                <AddUserInfor
+                    handleAddNewUser={this.handleAddNewUser}
+                />
                 <br />
                 <br />
-                <DisplayInfor listUsers={this.state.listUsers} />
+                <DisplayInfor
+                    listUsers={this.state.listUsers}
+
+                />
             </div>
         );
     }
