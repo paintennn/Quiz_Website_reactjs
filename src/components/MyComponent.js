@@ -1,6 +1,7 @@
 // class component
 // function component
 import React from "react";
+import { applyMiddleware } from "redux";
 
 
 //class component
@@ -20,22 +21,36 @@ class MyComponent extends React.Component {
             name: 'Phan',
             age: Math.floor((Math.random() * 100) + 1)
         })
-        this.setState({
-
-        })
+        // this.setState({
+        //     age: Math.floor((Math.random() * 100) + 1)
+        // })
 
     }
     handleOnMoverOver(event) {
         // console.log(event.pageX)
+    }
+
+    handleOnChangeInput = (event) => {
+        this.setState({
+            name: event.target.value
+        })
+        console.log(event, event.target.value)
+    }
+    handleOnSubmit = (event) => {
+        event.preventDefault()
+        console.log(this.state)
     }
     //JSX
     render() {
         return (
             <div>
                 My name is {this.state.name} and I'm {this.state.age}
-                <button onMouseOver={(event) => { this.handleOnMoverOver(event) }}>Hover me</button>
-                <button onClick={(event) => { this.handleClick(event) }}>Click me</button>
-
+                <form onSubmit={(event) => this.handleOnSubmit(event)}>
+                    <input
+                        onChange={(event) => this.handleOnChangeInput(event)}
+                        type="text" />
+                    <button>Submit</button>
+                </form>
             </div>
         );
     }
