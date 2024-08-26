@@ -11,9 +11,9 @@ class MyComponent extends React.Component {
 
     state = {
         listUsers: [
-            { id: 1, name: 'Phan Huu Thinh', age: '50' },
-            { id: 2, name: 'pain', age: '24' },
-            { id: 3, name: 'Thuan', age: '11' }
+            { id: 1, name: 'Phan Huu Thinh', age: '16' },
+            { id: 2, name: 'pain', age: '26' },
+            { id: 3, name: 'Thuan', age: '69' }
         ]
     }
     //JSX
