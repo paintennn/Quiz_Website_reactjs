@@ -7,6 +7,15 @@ class DisplayInfor extends React.Component {
         isShowListUser: true
     }
 
+    componentDidMount() {
+        console.log('Call me component did mount')
+        setTimeout(() => {
+            document.title = 'ThinhPhan'
+        }, 3000)
+    }
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log('Call me component did update', this.props, prevProps)
+    }
 
 
     handleShowHide = () => {
