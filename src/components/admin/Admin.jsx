@@ -1,8 +1,7 @@
 import SideBar from "./sideBar";
 import './Admin.scss'
 import { Outlet } from "react-router-dom";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 const Admin = (props) => {
     return(
         <div className="admin-container">
@@ -10,23 +9,10 @@ const Admin = (props) => {
                 <SideBar/>
             </div>
             <div className="admin-content">
-                <div className="admin-header">
-                    Header
-                </div>
                 <div className="admin-main">
                     <Outlet/>
                 </div>
             </div>
-            <ToastContainer
-                position="top-right"
-                autoClose={3000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-            />
         </div>
     )
 }

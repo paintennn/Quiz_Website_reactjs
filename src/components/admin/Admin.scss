@@ -15,11 +15,19 @@
         flex-direction: column;
         width: calc(100% - 270px); // Tính toán chiều rộng của phần nội dung chính
         .admin-header{
-            height: 40px;
+            height: 60px;
             border: 1px solid greenyellow;
         }
         .admin-main{
             height: auto;
         }
+    }
+
+    .admin-sidebar.collapsed {
+        width: 30px; /* Kích thước khi thu gọn */
+    }
+    .admin-sidebar.collapsed + .admin-content {
+        margin-left: 30px; /* Khoảng cách khi sidebar thu gọn */
+        width: calc(100% - 30px); /* Chiều rộng khi sidebar thu gọn */
     }
 }
